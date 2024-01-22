@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by codedrinker on 2019/4/24.
@@ -30,13 +30,20 @@ public class IndexController {
                         @RequestParam(name = "search", required = false) String search,
                         @RequestParam(name = "tag", required = false) String tag,
                         @RequestParam(name = "sort", required = false) String sort) {
-        PaginationDTO pagination = questionService.list(search, tag, sort, page, size);
-        List<String> tags = hotTagCache.getHots();
-        model.addAttribute("pagination", pagination);
+        PaginationDTO dto = new PaginationDTO();
+        dto.setPagination(0, 1);
+        model.addAttribute("pagination", dto);
         model.addAttribute("search", search);
         model.addAttribute("tag", tag);
-        model.addAttribute("tags", tags);
+        model.addAttribute("tags", new ArrayList<>());
         model.addAttribute("sort", sort);
+
+        try {
+            model.addAttribute("pagination", questionService.list(search, tag, sort, page, size));
+            model.addAttribute("tags", hotTagCache.getHots());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "index";
     }
 }

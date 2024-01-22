@@ -6,6 +6,7 @@ import life.majiang.community.model.AdExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +18,18 @@ public class AdService {
     private AdMapper adMapper;
 
     public List<Ad> list(String pos) {
-        AdExample navExample = new AdExample();
-        navExample.createCriteria()
-                .andStatusEqualTo(1)
-                .andPosEqualTo(pos)
-                .andGmtStartLessThan(System.currentTimeMillis())
-                .andGmtEndGreaterThan(System.currentTimeMillis());
-        return adMapper.selectByExample(navExample);
+        try {
+            AdExample navExample = new AdExample();
+            navExample.createCriteria()
+                    .andStatusEqualTo(1)
+                    .andPosEqualTo(pos)
+                    .andGmtStartLessThan(System.currentTimeMillis())
+                    .andGmtEndGreaterThan(System.currentTimeMillis());
+            return adMapper.selectByExample(navExample);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+
     }
 }

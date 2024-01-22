@@ -14,11 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * Created by codedrinker on 2019/5/16.
@@ -49,23 +50,29 @@ public class SessionInterceptor implements HandlerInterceptor {
             request.getServletContext().setAttribute(adPos.name(), adService.list(adPos.name()));
         }
         Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0)
+        if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token") && StringUtils.isNotBlank(cookie.getValue())) {
                     String token = cookie.getValue();
                     UserExample userExample = new UserExample();
                     userExample.createCriteria()
                             .andTokenEqualTo(token);
-                    List<User> users = userMapper.selectByExample(userExample);
-                    if (users.size() != 0) {
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user", users.get(0));
-                        Long unreadCount = notificationService.unreadCount(users.get(0).getId());
-                        session.setAttribute("unreadCount", unreadCount);
+                    try {
+                        List<User> users = userMapper.selectByExample(userExample);
+                        if (users.size() != 0) {
+                            HttpSession session = request.getSession();
+                            session.setAttribute("user", users.get(0));
+                            Long unreadCount = notificationService.unreadCount(users.get(0).getId());
+                            session.setAttribute("unreadCount", unreadCount);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
                     break;
                 }
             }
+        }
         return true;
     }
 

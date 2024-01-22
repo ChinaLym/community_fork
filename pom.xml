@@ -21,9 +21,17 @@
         <profile>
             <id>dev</id>
             <properties>
-                <db.url>jdbc:h2:~/community</db.url>
+<!--                <db.url>jdbc:h2:file:~/IdeaProjects/openSource/community/comm;MODE=MySQL;AUTO_SERVER=TRUE;DATABASE_TO_UPPER=false;MODE=MYSQL;DB_CLOSE_ON_EXIT=FALSE;</db.url>-->
+                <db.url>jdbc:h2:mem:dbtest;DATABASE_TO_UPPER=false;MODE=MYSQL;DB_CLOSE_ON_EXIT=FALSE;</db.url>
                 <db.user>sa</db.user>
                 <db.password>123</db.password>
+                <db.driver>org.h2.Driver</db.driver>
+                <db.schema>classpath:schema.sql</db.schema>
+<!--                <db.data>classpath:data.sql</db.data>-->
+                <db.schema></db.schema>
+                <db.data></db.data>
+                <db.initialization-mode>always</db.initialization-mode>
+                <db.continue-on-error>false</db.continue-on-error>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -32,10 +40,14 @@
         <profile>
             <id>mysql</id>
             <properties>
-                <db.url>jdbc:mysql://127.0.0.1:3306/</db.url>
+                <db.url>jdbc:mysql://127.0.0.1:3306/community?useUnicode=true&amp;characterEncoding=UTF-8</db.url>
                 <db.user>root</db.user>
                 <db.password>root</db.password>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>
+                <db.schema></db.schema>
+                <db.data></db.data>
+                <db.initialization-mode>never</db.initialization-mode>
+                <db.continue-on-error>true</db.continue-on-error>
             </properties>
         </profile>
     </profiles>
@@ -84,12 +96,16 @@
             <artifactId>guava</artifactId>
             <version>23.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.199</version>
         </dependency>
+        <dependency>
+            <groupId>org.locationtech.jts</groupId>
+            <artifactId>jts-core</artifactId>
+            <version>1.16.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -129,6 +145,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.1.4.RELEASE</version>
             </plugin>
             <plugin>
                 <groupId>org.flywaydb</groupId>
