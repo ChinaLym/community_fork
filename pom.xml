@@ -27,8 +27,8 @@
                 <db.password>123</db.password>
                 <db.driver>org.h2.Driver</db.driver>
                 <db.schema>classpath:schema.sql</db.schema>
-<!--                <db.data>classpath:data.sql</db.data>-->
-                <db.schema></db.schema>
+                <!--                <db.schema></db.schema>-->
+                <!--                <db.data>classpath:data.sql</db.data>-->
                 <db.data></db.data>
                 <db.initialization-mode>always</db.initialization-mode>
                 <db.continue-on-error>false</db.continue-on-error>

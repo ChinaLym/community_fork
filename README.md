@@ -1,5 +1,9 @@
 ## 码问
 
+# 更新：
+**支持本地部署**：下载后直接运行，自动激活h2内存数据库
+访问 http://localhost:8887 即可，另外可以访问 http://localhost:8887/h2-console 访问数据库，不需要安装启动 mysql 等
+
 ## 在线演示地址
 [https://www.mawen.co](https://www.mawen.co)，任何配置、使用和答疑问题，可以 👉[点击](#联系我) 联系我，也可以拉你进群沟通。
 
@@ -133,6 +137,8 @@ mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 |  码匠笔记  |  fit8295 |
 |  ![](https://mawen-cdn.cn-bj.ufileos.com/wxdyh-qr.jpeg?iopcmd=thumbnail&type=1&scale=50)   |   ![](http://mawen-cdn.cn-bj.ufileos.com/wechat.jpeg?iopcmd=thumbnail&type=1&scale=50)  |
 
+
+pom.xml 特殊字符
 
 &  &amp;
 <  &lt;
